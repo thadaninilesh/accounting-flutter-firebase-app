@@ -23,19 +23,6 @@ class _AddExpenseState extends State<AddExpense> {
   String error = '';
   ExpenseService _expenseService = ExpenseService();
 
-  DateTime selectedDate = DateTime.now();
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
-      expenseDetails.containsKey('date')
-          ? expenseDetails.update('date', (value) => picked)
-          : expenseDetails.putIfAbsent('date', () => picked);
-  }
-
   @override
   Widget build(BuildContext context) {
     final userId = Provider.of<UserId>(context);
@@ -209,7 +196,12 @@ class _AddExpenseState extends State<AddExpense> {
                               }
                             }
                           }),
-                    )
+                    ),
+                    SizedBox(height: 10.0),
+                    Text(
+                      error,
+                      style: TextStyle(color: errorColor),
+                    ),
                   ],
                 )),
           ),

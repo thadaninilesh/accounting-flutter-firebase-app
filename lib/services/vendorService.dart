@@ -14,7 +14,8 @@ class VendorService {
     String response = '';
     if (result is UserId) {
       vendorDetails.putIfAbsent('userUID', () => result.uid);
-      HashMap<String, dynamic> vendorMap = vendorDetails;
+      HashMap<String, dynamic> vendorMap = HashMap();
+      vendorMap.addAll(vendorDetails);
       vendorMap.putIfAbsent('createdAt', () => FieldValue.serverTimestamp());
       vendorMap.putIfAbsent('updatedAt', () => FieldValue.serverTimestamp());
       await _firestore
@@ -112,7 +113,17 @@ class VendorService {
   }
 
   Future<bool> deleteVendor(String vendorUID) async {
+    // also delete expenses with this vendor
     bool isSuccess = true;
+
+    QuerySnapshot expenseSnaphot = await _firestore
+        .collection(EXPENSES_COLLECTION)
+        .where('vendorUID', isEqualTo: vendorUID)
+        .getDocuments();
+    expenseSnaphot.documents.forEach((element) {
+      element.reference.delete();
+    });
+
     await _firestore
         .collection(VENDORS_COLLECTION)
         .document(vendorUID)

@@ -1,7 +1,9 @@
+import 'dart:collection';
+
 import 'package:accounting/commons/resources.dart';
 import 'package:accounting/models/user.dart';
-import 'package:accounting/screens/vendor/addVendor.dart';
-import 'package:accounting/screens/vendor/vendorTile.dart';
+import 'package:accounting/screens/vendors/addVendor.dart';
+import 'package:accounting/screens/vendors/vendorTile.dart';
 import 'package:accounting/services/vendorService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -49,11 +51,12 @@ class _ViewVendorsState extends State<ViewVendors> {
                         scrollDirection: Axis.vertical,
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context, index) {
-                          snapshot.data.documents[index].data.putIfAbsent(
-                              'vendorUID',
+                          Map<String, dynamic> vendorDetails = new HashMap();
+                          vendorDetails
+                              .addAll(snapshot.data.documents[index].data);
+                          vendorDetails.putIfAbsent('vendorUID',
                               () => snapshot.data.documents[index].documentID);
-                          return VendorTile(
-                              vendor: snapshot.data.documents[index].data);
+                          return VendorTile(vendor: vendorDetails);
                         },
                       );
                     } else {

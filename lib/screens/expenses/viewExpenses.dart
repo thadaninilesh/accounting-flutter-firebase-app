@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:accounting/commons/resources.dart';
-import 'package:accounting/models/expenseManagement.dart';
 import 'package:accounting/models/user.dart';
 import 'package:accounting/screens/expenses/addExpense.dart';
 import 'package:accounting/screens/expenses/expenseTile.dart';
@@ -17,7 +16,6 @@ class ManageExpenses extends StatefulWidget {
 }
 
 class ManageExpensesState extends State<ManageExpenses> {
-  final _formKey = GlobalKey<FormState>();
   HashMap expenseDetails = new HashMap<String, String>();
   String error = '';
   ExpenseService _expenseService = ExpenseService();
@@ -77,14 +75,16 @@ class ManageExpensesState extends State<ManageExpenses> {
                                     itemCount:
                                         expenseSnapshot.data.documents.length,
                                     itemBuilder: (context, index) {
-                                      expenseSnapshot.data.documents[index].data
-                                          .putIfAbsent(
-                                              'expenseUID',
-                                              () => expenseSnapshot.data
-                                                  .documents[index].documentID);
+                                      Map<String, dynamic> expenseDetails =
+                                          new HashMap();
+                                      expenseDetails.addAll(expenseSnapshot
+                                          .data.documents[index].data);
+                                      expenseDetails.putIfAbsent(
+                                          'expenseUID',
+                                          () => expenseSnapshot.data
+                                              .documents[index].documentID);
                                       return ExpenseTile(
-                                        expense: expenseSnapshot
-                                            .data.documents[index].data,
+                                        expense: expenseDetails,
                                         vendorName: vendorSnapshot.data[
                                             expenseSnapshot
                                                 .data

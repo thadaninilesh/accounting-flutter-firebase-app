@@ -1,8 +1,8 @@
 import 'package:accounting/commons/resources.dart';
-import 'package:accounting/screens/auth/signIn.dart';
+import 'package:accounting/screens/clients/manageClients.dart';
 import 'package:accounting/screens/expenses/viewExpenses.dart';
 import 'package:accounting/screens/user/profile.dart';
-import 'package:accounting/screens/vendor/viewVendors.dart';
+import 'package:accounting/screens/vendors/viewVendors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -81,7 +81,9 @@ class _HomeState extends State<Home> {
               ? Container()
               : _selectedIndex == 1
                   ? ViewVendors()
-                  : _selectedIndex == 2 ? ManageExpenses() : Profile(),
+                  : _selectedIndex == 2
+                      ? ManageExpenses()
+                      : _selectedIndex == 3 ? ManageClients() : Profile(),
         ));
   }
 }

@@ -123,6 +123,7 @@ showProgressDialog(BuildContext context, String title) {
 final String USERS_COLLECTION = 'users';
 final String VENDORS_COLLECTION = 'vendors';
 final String EXPENSES_COLLECTION = 'expenses';
+final String CLIENTS_COLLECTION = 'clients';
 
 // constants
 final String EMAIL = 'email';

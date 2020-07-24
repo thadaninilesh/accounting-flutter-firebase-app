@@ -1,5 +1,5 @@
 import 'package:accounting/commons/resources.dart';
-import 'package:accounting/screens/vendor/editVendor.dart';
+import 'package:accounting/screens/vendors/editVendor.dart';
 import 'package:accounting/services/vendorService.dart';
 import 'package:flutter/material.dart';
 
@@ -171,10 +171,38 @@ class _VendorTileState extends State<VendorTile> {
                           ),
                           color: Colors.red,
                           onPressed: () async {
-                            bool isSuccess = await VendorService()
-                                .deleteVendor(widget.vendor['vendorUID']);
-                            showSimpleDialogBox(
-                                context, 'Vendor Deleted', false);
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                        'Do you really want to delete ${widget.vendor['name']}?'),
+                                    content: Text(
+                                        'All expenses related to this vendor will also be deleted'),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text('Cancel'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop(true);
+                                        },
+                                      ),
+                                      RaisedButton(
+                                        child: Text('Confirm'),
+                                        color: Colors.red,
+                                        onPressed: () async {
+                                          Navigator.of(context).pop(true);
+                                        },
+                                      )
+                                    ],
+                                  );
+                                }).then((value) async {
+                              if (value is bool && value) {
+                                bool isSuccess = await VendorService()
+                                    .deleteVendor(widget.vendor['vendorUID']);
+                                showSimpleDialogBox(
+                                    context, 'Vendor Deleted', false);
+                              }
+                            });
                           },
                         ),
                         RaisedButton(
