@@ -1,3 +1,4 @@
+import 'package:accounting/screens/user/profile.dart';
 import 'package:flutter/material.dart';
 
 Color primaryColor = Color(0xff24527a);
@@ -32,6 +33,16 @@ appBarWidget(BuildContext context, String heading) {
     backgroundColor: appBarBackgroundColor,
     title: Text(heading, style: TextStyle(color: appBarTextColor)),
     elevation: appBarElevation,
+    actions: <Widget>[
+      IconButton(
+        tooltip: 'Profile',
+        icon: Icon(Icons.account_circle),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Profile()));
+        },
+      )
+    ],
   );
 }
 

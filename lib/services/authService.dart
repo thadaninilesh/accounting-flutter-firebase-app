@@ -92,7 +92,7 @@ class AuthService {
         Map<String, dynamic> data = documentSnapshot.data;
         user = User(
           uid: uid,
-          userName: data['userName'],
+          userName: data['fullName'],
           phoneNumber: data['phoneNumber'],
           businessName: data['businessName'],
           website: data['website'],
@@ -102,9 +102,33 @@ class AuthService {
           gst: data['gst'] ?? '',
         );
       } else {
-        user = null;
+        user = User();
       }
     });
     return user;
+  }
+
+  Future<dynamic> updateUser(User user) async {
+    try {
+      await _firestore
+          .collection(USERS_COLLECTION)
+          .document(user.uid)
+          .updateData({
+        'businessName': user.businessName,
+        'emailAddress': user.emailAddress,
+        'fullName': user.userName,
+        'phoneNumber': user.phoneNumber,
+        'gst': user.gst,
+        'pan': user.pan,
+        'address': user.address,
+        'website': user.website,
+        'updatedAt': FieldValue.serverTimestamp()
+      });
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return e;
+    }
   }
 }

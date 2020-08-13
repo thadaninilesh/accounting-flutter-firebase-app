@@ -1,4 +1,5 @@
 import 'package:accounting/commons/resources.dart';
+import 'package:accounting/screens/auth/signIn.dart';
 import 'package:accounting/screens/clients/manageClients.dart';
 import 'package:accounting/screens/expenses/viewExpenses.dart';
 import 'package:accounting/screens/user/profile.dart';
@@ -14,7 +15,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<String> _heading = [];
-  List<Widget> _views = [];
   @override
   void initState() {
     super.initState();
@@ -22,8 +22,7 @@ class _HomeState extends State<Home> {
       'Invoices Management',
       'Vendor Management',
       'Expense Management',
-      'Client Management',
-      'Profile'
+      'Client Management'
     ];
   }
 
@@ -71,10 +70,6 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.group),
                 title: Text('Client'),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                title: Text('Profile'),
-              ),
             ]),
         body: Container(
           child: _selectedIndex == 0
@@ -83,7 +78,7 @@ class _HomeState extends State<Home> {
                   ? ViewVendors()
                   : _selectedIndex == 2
                       ? ManageExpenses()
-                      : _selectedIndex == 3 ? ManageClients() : Profile(),
+                      : _selectedIndex == 3 ? ManageClients() : SignIn(),
         ));
   }
 }

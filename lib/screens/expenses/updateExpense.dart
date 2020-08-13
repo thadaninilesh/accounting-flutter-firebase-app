@@ -2,8 +2,6 @@ import 'package:accounting/commons/resources.dart';
 import 'package:accounting/models/user.dart';
 import 'package:accounting/screens/auth/signIn.dart';
 import 'package:accounting/services/expenseService.dart';
-import 'package:accounting/services/vendorService.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
